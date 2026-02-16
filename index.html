@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Namaz Vakitleri 2026 | Ezan Saatleri ve Kıble Bulucu</title>
+        <meta name="description"
+            content="2026 yılı için Diyanet uyumlu il il namaz vakitleri, haftalık ve aylık ezan saatleri. Kıble yönü bulma ve dini günler listesi.">
+        <meta name="keywords"
+            content="namaz vakitleri, ezan saatleri, istanbul namaz vakti, kıble bulucu, 2026 dini günler, imsakiye 2026">
+        <meta name="author" content="Namaz Vakti Pro">
+
+        <meta property="og:title" content="Namaz Vakitleri 2026 - Tüm İller">
+        <meta property="og:description" content="Diyanet uyumlu güncel namaz vakitleri ve kıble yönü.">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="İl il güncel namaz vakitlerini takip edin, kıble yönünüzü bulun.">
+        <meta property="og:image" content="https://ezanzamani.com/preview-image.jpg">
+        <meta property="og:url" content="https:///ezanzamani.com">
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-logo">
+            <i class="fa-solid fa-mosque"></i> Namaz Vakti Pro
+        </div>
+
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#main-container" onclick="switchTab('haftalik')" data-i18n="weekly">Haftalık</a></li>
+                <li><a href="#main-container" onclick="switchTab('aylik')" data-i18n="monthly">Aylık</a></li>
+                <li><a href="#main-container" onclick="switchTab('diniGunler')" data-i18n="religiousDays">Dini
+                        Günler</a></li>
+
+            </ul>
+
+
+            <div class="nav-buttons">
+                <a href="https://qiblafinder.withgoogle.com/" target="_blank" class="qibla-btn">
+                    <i class="fa-solid fa-compass"></i> <span data-i18n="qibla">Kıble</span>
+                </a>
+
+                <div class="dropdown">
+                    <button class="city-btn">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span id="selectedCityLabel">İstanbul</span>
+                    </button>
+
+                    <div class="dropdown-content">
+                        <div class="search-container">
+                            <input type="text" id="citySearch" placeholder="Şehir ara..." onkeyup="filterCities()">
+                        </div>
+                        <div id="cityList" class="city-list-container">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lang-wrapper">
+                    <i class="fa-solid fa-globe lang-icon"></i>
+                    <select onchange="changeLanguage(this.value)" class="lang-select">
+                        <option value="tr">TR</option>
+                        <option value="en">EN</option>
+                        <option value="ar">AR</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="spiritual-card" id="spiritualCard">
+        <div class="spiritual-visual">
+            <img id="dailyImage" src="" alt="Islamic Architecture">
+            <div class="visual-overlay">
+                <span class="badge-esma">Günün Esması</span>
+                <h2 id="esmaTitle">El-Vedûd</h2>
+                <p id="esmaMeaning">Çok seven ve sevilmeye layık olan.</p>
+            </div>
+        </div>
+
+        <div class="spiritual-content">
+            <div class="content-header">
+                <div class="icon-box">
+                    <i class="fa-solid fa-quran"></i>
+                </div>
+                <h3 data-i18n="dailyInfoTitle">Günün Ayeti</h3>
+            </div>
+
+            <blockquote class="verse-text" id="infoText">
+                Yükleniyor...
+            </blockquote>
+
+            <div class="content-footer">
+                <span class="verse-source" id="infoSource"></span>
+                <button class="share-btn" onclick="shareContent()">
+                    <i class="fa-solid fa-share-nodes"></i> <span data-i18n="share">Paylaş</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container" id="main-container">
+
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <h2 id="cityDisplay">İSTANBUL İÇİN NAMAZ VAKİTLERİ</h2>
+                <div id="currentDateFull" class="date-full">Yükleniyor...</div>
+            </div>
+
+            <div class="dashboard-clocks">
+                <div class="clock-box">
+                    <span class="clock-label" id="nextPrayerLabel">SIRADAKİ VAKTE KALAN SÜRE</span>
+                    <div class="clock-time" id="countdown">00:00:00</div>
+                </div>
+                <div class="clock-box">
+                    <span class="clock-label">ŞU ANKİ SAAT</span>
+                    <div class="clock-time" id="realTimeClock">00:00:00</div>
+                </div>
+            </div>
+
+            <div class="times-grid" id="todayCards">
+            </div>
+        </div>
+
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchTab('haftalik')" id="btn-haftalik">Haftalık Namaz
+                Vakti</button>
+            <button class="tab-btn" onclick="switchTab('aylik')" id="btn-aylik">Aylık Namaz Vakitleri</button>
+            <button class="tab-btn" onclick="switchTab('diniGunler')" id="btn-diniGunler">2026 Dini Günler</button>
+        </div>
+
+        <div class="tab-content-container">
+
+            <div id="tab-haftalik" class="tab-pane active">
+                <h3 class="table-title"><span id="tableTitleCity">İstanbul</span> İçin Haftalık Namaz Vakitleri</h3>
+                <div class="table-responsive">
+                    <table class="vakit-table">
+                        <thead>
+                            <tr>
+                                <th>Miladi Tarih</th>
+                                <th>Hicri Tarih</th>
+                                <th>İmsak</th>
+                                <th>Güneş</th>
+                                <th>Öğle</th>
+                                <th>İkindi</th>
+                                <th>Akşam</th>
+                                <th>Yatsı</th>
+                            </tr>
+                        </thead>
+                        <tbody id="weeklyTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab-aylik" class="tab-pane">
+                <h3 class="table-title"><span id="tableTitleCityMonthly">İstanbul</span> İçin Aylık Namaz Vakitleri</h3>
+                <div class="table-responsive">
+                    <table class="vakit-table">
+                        <thead>
+                            <tr>
+                                <th>Miladi Tarih</th>
+                                <th>Hicri Tarih</th>
+                                <th>İmsak</th>
+                                <th>Güneş</th>
+                                <th>Öğle</th>
+                                <th>İkindi</th>
+                                <th>Akşam</th>
+                                <th>Yatsı</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthlyTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab-diniGunler" class="tab-pane">
+                <h3 class="table-title">2026 Yılı Dini Günler Listesi</h3>
+                <div class="table-responsive">
+                    <table class="vakit-table">
+                        <thead>
+                            <tr>
+                                <th>Dini Gün / Gece</th>
+                                <th>Miladi Tarih (2026)</th>
+                                <th>Hicri Tarih (1447-1448)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="religiousDaysBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+
+    </div>
+    <footer class="modern-footer">
+        <div class="footer-silhouette"></div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Hakkımızda</h4>
+                <p style="font-size: 0.8rem; color: #bdc3c7;">
+                    Namaz Vakti Pro, 2026 yılı için Diyanet İşleri Başkanlığı verileriyle %100 uyumlu ezan saatlerini
+                    sunar.
+                    Amacımız, kullanıcıların ibadet vakitlerini en doğru ve hızlı şekilde takip etmesini sağlamaktır.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4 data-i18n="quickAccess">Hızlı Erişim</h4>
+                <ul>
+                    <li><a href="#">Kur'an-ı Kerim</a></li>
+                    <li><a href="#">Hadis-i Şerif</a></li>
+                    <li><a href="#">Dini Bilgiler</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4 data-i18n="externalLinks">Bağlantılar</h4>
+                <ul>
+                    <li><a href="#">Diyanet TV</a></li>
+                    <li><a href="#">Vakit Hesaplama</a></li>
+                    <li><a href="#">Hac ve Umre</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4 data-i18n="contact">İletişim</h4>
+                <div class="social-icons">
+                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Namaz Vakti Pro - <span data-i18n="allRightsReserved">Tüm Hakları Saklıdır.</span>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
