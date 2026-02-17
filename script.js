@@ -666,4 +666,48 @@ window.addEventListener('click', function(event) {
         }
     }
 });
+const fridayMessages = [
+    { img: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=500", text: "Rabbim bu mübarek cuma günü hürmetine dualarınızı kabul eylesin. Hayırlı Cumalar." },
+    { img: "https://images.unsplash.com/photo-1564121211835-e88c852648ab?auto=format&fit=crop&w=500", text: "Gül kokulu cumalar dilerim. Kalbiniz huzurla, eviniz bereketle dolsun Hayırlı Cumalar." },
+    { img: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=500", text: "Cumanız aşk olsun, dualarınız makbul olsun. En güzel gül bahçeleri sizin olsun Hayırlı Cumalar." },
+    { img: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=500", text: "Nurlu cumalar. Mevla bizleri sevdiklerinden ayırmasın Hayırlı Cumalar." },
+       { img: "https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=500", text: "Bu mübarek günde dualarda buluşmak dileğiyle. Hayırlı Cumalar." },
+     { img: "https://images.unsplash.com/photo-1507501336603-6e31db2be093?auto=format&fit=crop&w=500", text: "Gönüller dua ile birleşince cuma daha bir güzel olur. Hayırlı Hayırlı Cumalar." },
+    { img: "https://images.unsplash.com/photo-1507501336603-6e31db2be093?auto=format&fit=crop&w=500", text: "Cuma gününün nuru üzerinize olsun. Selam ve dua ile Hayırlı Cumalar." },
+    { img: "https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=500", text: "Rabbim gönlünüzdeki her hayırlı duayı ömrünüze nasip etsin Hayırlı Cumalar." },
+    { img: "https://images.unsplash.com/photo-1493957988430-a5f2e15f39a3?auto=format&fit=crop&w=500", text: "Bereketi bol, huzuru daim bir cuma dilerim. Sevdiklerinize selam olsun Hayırlı Cumalar." },
+    { img: "https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=500", text: "Hayır kapılarının sonuna kadar açıldığı bu günde dualarınız kabul olsun Hayırlı Cumalar." }
+];  
 
+function loadFridayMessages() {
+    const container = document.getElementById('fridayMessagesContainer');
+    fridayMessages.forEach(msg => {
+        const card = `
+            <div class="friday-card">
+                <img src="${msg.img}" alt="Cuma Mesajı Görseli">
+                <div class="friday-card-content">
+                    <p class="friday-text">${msg.text}</p>
+                    <button class="friday-share-btn" onclick="shareFriday('${msg.text}')">
+                        <i class="fa-solid fa-paper-plane"></i> Paylaş
+                    </button>
+                </div>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+}
+
+function shareFriday(text) {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Cuma Mesajı',
+            text: text,
+            url: window.location.href
+        });
+    } else {
+        alert("Mesaj kopyalandı: " + text);
+    }
+}
+
+// Sayfa yüklendiğinde çalıştır
+document.addEventListener('DOMContentLoaded', loadFridayMessages);
