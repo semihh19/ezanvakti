@@ -681,13 +681,14 @@ const fridayMessages = [
 
 function loadFridayMessages() {
     const container = document.getElementById('fridayMessagesContainer');
+    container.innerHTML = ''; // İçini temizleyelim
     fridayMessages.forEach(msg => {
         const card = `
             <div class="friday-card">
                 <img src="${msg.img}" alt="Cuma Mesajı Görseli">
                 <div class="friday-card-content">
                     <p class="friday-text">${msg.text}</p>
-                    <button class="friday-share-btn" onclick="shareFriday('${msg.text}')">
+                    <button class="friday-share-btn" onclick="shareFriday('${msg.img}', '${msg.text}')">
                         <i class="fa-solid fa-paper-plane"></i> Paylaş
                     </button>
                 </div>
@@ -697,17 +698,29 @@ function loadFridayMessages() {
     });
 }
 
-function shareFriday(text) {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Cuma Mesajı',
-            text: text,
-            url: window.location.href
-        });
-    } else {
-        alert("Mesaj kopyalandı: " + text);
+async function shareFriday(imgSrc, text) {
+    try {
+        // 1. Görseli indirip paylaşılabilir bir dosya haline getiriyoruz
+        const response = await fetch(imgSrc);
+        const blob = await response.blob();
+        const file = new File([blob], 'cuma-mesaji.jpg', { type: 'image/jpeg' });
+
+        // 2. Paylaşma menüsünü açıyoruz (Dosya + Metin)
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+                files: [file],
+                title: 'Cuma Mesajı',
+                text: text
+            });
+        } else {
+            // Eğer tarayıcı dosya paylaşımını desteklemiyorsa sadece metni kopyalar/paylaşır
+            alert("Cihazınız görsel paylaşımını desteklemiyor, metin kopyalandı: " + text);
+        }
+    } catch (error) {
+        console.error('Paylaşım hatası:', error);
+        alert("Paylaşım sırasında bir hata oluştu.");
     }
-}
+}   
 
 // Sayfa yüklendiğinde çalıştır
 document.addEventListener('DOMContentLoaded', loadFridayMessages);
