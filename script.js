@@ -183,7 +183,14 @@ function updateUI() {
     startCountdown(todayData.timings, tomorrowData.timings);
 
     // 3. Tarih bilgisini yazdır
-    const miladiDate = new Date().toLocaleDateString('tr-TR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+ const miladiDate = new Date().toLocaleDateString('tr-TR', {
+    timeZone: 'Europe/Istanbul',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
+
     const hijriMonthEn = todayData.date.hijri.month.en;
     const hijriDate = `${todayData.date.hijri.day} ${hijriMonthsTR[hijriMonthEn] || hijriMonthEn} ${todayData.date.hijri.year}`;
     document.getElementById('currentDateFull').innerText = `${miladiDate} | ${hijriDate}`;
@@ -218,7 +225,10 @@ function startCountdown(todayTimings, tomorrowTimings) {
     if (countdownTimer) clearInterval(countdownTimer);
 
     countdownTimer = setInterval(() => {
-        const now = new Date();
+      const now = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" })
+);
+
         let nextPrayer = null;
 
         // Bugünün vakitlerini kontrol et
@@ -271,10 +281,17 @@ document.getElementById('nextPrayerLabel').innerText = translations[currentLang]
 // Canlı Saat
 function startRealTimeClock() {
     realTimeTimer = setInterval(() => {
-        const now = new Date();
-        document.getElementById('realTimeClock').innerText = now.toLocaleTimeString('tr-TR');
+
+        const turkeyNow = new Date(
+            new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" })
+        );
+
+        document.getElementById('realTimeClock').innerText =
+            turkeyNow.toLocaleTimeString('tr-TR');
+
     }, 1000);
 }
+
 
 // --- TABLOLARI OLUŞTURMA ---
 function renderTables() {
