@@ -568,22 +568,24 @@ function updateDailyContentUI() {
 function shareContent() {
     const dayIndex = new Date().getDay();
     const msg = weeklyMessages[dayIndex];
-    const shareUrl = window.location.origin + window.location.pathname + "#spiritualCard";
 
-    // WhatsApp formatına uygun (boldlar ve emojiler eklenmiş)
-    const fullMessage = `*${msg.title}*\n\n"${msg.text}"\n\n_${msg.viral}_\n\n👇 Detaylı Vakitler ve Ayetler İçin:\n${shareUrl}`;
+    const shareUrl = "https://semihh19.github.io/ezanvakti/";
 
-    if (navigator.share) {
-        navigator.share({
-            title: msg.title,
-            text: fullMessage,
-            url: shareUrl
-        });
-    } else {
-        navigator.clipboard.writeText(fullMessage);
-        alert("Mesaj kopyalandı! Şimdi WhatsApp gruplarında paylaşabilirsin.");
-    }
+    const fullMessage =
+`🌙 ${msg.title}
+
+${msg.text}
+
+${msg.viral}
+
+Detaylı namaz vakitleri ve cuma mesajları için:
+${shareUrl}`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(fullMessage)}`;
+
+    window.open(whatsappUrl, "_blank");
 }
+
 /* --- HAFTALIK OTOMATİK MESAJ SİSTEMİ --- */
 const weeklyMessages = {
     0: { // Pazar
@@ -709,7 +711,8 @@ async function shareFriday(imgSrc, text) {
         const file = new File([blob], 'cuma-mesaji.jpg', { type: 'image/jpeg' });
 
         // 2. Linki metnin içine açıkça ekle (En sağlam yöntem budur)
-        const siteLink = window.location.origin + window.location.pathname;
+        const siteLink = "https://semihh19.github.io/ezanvakti/";
+
         const fullMessage = `${text}\n\n👇 Diğer Mesajlar ve Vakitler İçin:\n${siteLink}`;
 
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
