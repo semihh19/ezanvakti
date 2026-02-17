@@ -139,8 +139,8 @@ async function fetchMonthlyData(city) {
         const year = now.getFullYear();
         const month = now.getMonth() + 1;
 
-        // Aladhan API - method=13 (Diyanet İşleri Başkanlığı)
-        const url = `https://api.aladhan.com/v1/calendarByCity?city=${city}&country=Turkey&method=13&month=${month}&year=${year}`;
+        // URL sonuna &timezone=Europe/Istanbul ekledik
+const url = `https://api.aladhan.com/v1/calendar/${year}/${month}?latitude=${lat}&longitude=${lng}&method=13&timezone=Europe/Istanbul`;
         
         const response = await fetch(url);
         const data = await response.json();
@@ -629,4 +629,5 @@ window.onload = function() {
     if (typeof loadWeeklyInspiration === "function") {
         loadWeeklyInspiration();
     }
+
 };
