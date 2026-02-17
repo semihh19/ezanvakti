@@ -739,3 +739,18 @@ nav {
 /* Kaydırma çubuğunu güzelleştirelim */
 .slider-wrapper::-webkit-scrollbar { height: 6px; }
 .slider-wrapper::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
+
+.seo-text-content {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+    text-align: center;
+    color: #7f8c8d; /* Narin bir gri */
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.seo-text-content strong {
+    color: var(--primary-color); /* Anahtar kelimeleri hafifçe belirginleştirir */
+    font-weight: 500;
+}
