@@ -703,27 +703,26 @@ function loadFridayMessages() {
 
 async function shareFriday(imgSrc, text) {
     try {
-        // 1. Görseli indirip paylaşılabilir bir dosya objesine çeviriyoruz
+        // 1. Görseli dosya olarak hazırla
         const response = await fetch(imgSrc);
         const blob = await response.blob();
         const file = new File([blob], 'cuma-mesaji.jpg', { type: 'image/jpeg' });
 
-        // 2. Paylaşma menüsünü (dosya desteği ile) tetikliyoruz
+        // 2. Paylaşırken URL (link) ekle
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
             await navigator.share({
                 files: [file],
                 title: 'Cuma Mesajı',
                 text: text,
+                url: window.location.href // Mevcut sayfa linkini buraya ekledik
             });
         } else {
-            // Masaüstü veya desteklemeyen tarayıcılar için eski yöntem
-            const shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + " " + window.location.href)}`;
-            window.open(shareUrl, '_blank');
+            // Desteklemeyen tarayıcılar için klasik yöntem (Link dahil)
+            const fullMsg = `${text} \n\nDetaylı Vakitler: ${window.location.href}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(fullMsg)}`);
         }
-    } catch (error) {
-        console.error('Paylaşım hatası:', error);
-        // Hata durumunda en azından metni gönder
-        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    } catch (err) {
+        console.error("Paylaşım hatası:", err);
     }
 } 
 
