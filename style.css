@@ -42,11 +42,24 @@ nav {
     z-index: 1000;
 }
 
+/* Logo ve İkon Hizalaması */
 .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* İkon ile yazı arasındaki boşluk */
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    letter-spacing: 1px;
+}
+.diyanet-logo-svg {
+    width: 45px;  /* Diyanet sitesindeki yaklaşık boyut */
+    height: 45px;
+    filter: drop-shadow(0 0 2px rgba(255,255,255,0.3)); /* Hafif bir parlama */
+}
+
+.nav-logo span {
+    line-height: 1;
+    letter-spacing: 0.5px;
 }
 .nav-container {
     display: flex;
@@ -622,3 +635,107 @@ nav {
     }
 
 }
+.friday-messages-section {
+    padding: 50px 5%;
+    background: #fff;
+    margin-top: 30px;
+    border-radius: 15px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header h2 {
+    color: var(--primary-dark);
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.friday-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.friday-card {
+    background: #fdfdfd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    border: 1px solid #eee;
+}
+
+.friday-card:hover {
+    transform: translateY(-5px);
+}
+
+.friday-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.friday-card-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.friday-text {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    height: 60px; /* Metin boylarını eşitlemek için */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.friday-share-btn {
+    width: 100%;
+    background: #27ae60; /* Cuma ruhuna uygun yeşil */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.3s;
+}
+
+.friday-share-btn:hover {
+    background: #219150;
+}
+.slider-wrapper {
+    overflow-x: auto; /* Yana kaydırma sağlar */
+    padding-bottom: 20px;
+    scroll-snap-type: x mandatory; /* Kartların tak diye oturmasını sağlar */
+    -webkit-overflow-scrolling: touch;
+}
+
+.friday-slider {
+    display: flex;
+    gap: 20px;
+    padding: 10px 5px;
+}
+
+.friday-card {
+    flex: 0 0 300px; /* Kart genişliği sabit */
+    scroll-snap-align: start;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+}
+
+/* Kaydırma çubuğunu güzelleştirelim */
+.slider-wrapper::-webkit-scrollbar { height: 6px; }
+.slider-wrapper::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
