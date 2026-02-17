@@ -647,3 +647,23 @@ window.onload = function() {
         loadWeeklyInspiration();
     }
 };
+// Şehir seçme butonunu ve açılır menüyü seçiyoruz
+const cityBtn = document.querySelector('.city-btn');
+const dropdownContent = document.querySelector('.dropdown-content');
+
+// Butona tıklandığında 'show' class'ını ekle/çıkar (Aç/Kapat)
+cityBtn.addEventListener('click', function(event) {
+    dropdownContent.classList.toggle('show');
+    event.stopPropagation(); // Tıklamanın dışarı taşmasını engeller
+});
+
+// Ekranın boş bir yerine tıklandığında menüyü kapat
+window.addEventListener('click', function(event) {
+    // Eğer tıklanan yer dropdown'ın içi değilse
+    if (!event.target.closest('.dropdown')) {
+        if (dropdownContent.classList.contains('show')) {
+            dropdownContent.classList.remove('show');
+        }
+    }
+});
+
