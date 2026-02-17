@@ -681,7 +681,10 @@ const fridayMessages = [
 
 function loadFridayMessages() {
     const container = document.getElementById('fridayMessagesContainer');
-    container.innerHTML = ''; // İçini temizleyelim
+    if (!container) return; // Hata almamak için kontrol ekledik
+    
+    container.innerHTML = ''; 
+    
     fridayMessages.forEach(msg => {
         const card = `
             <div class="friday-card">
@@ -700,27 +703,29 @@ function loadFridayMessages() {
 
 async function shareFriday(imgSrc, text) {
     try {
-        // 1. Görseli indirip paylaşılabilir bir dosya haline getiriyoruz
+        // 1. Görseli indirip paylaşılabilir bir dosya objesine çeviriyoruz
         const response = await fetch(imgSrc);
         const blob = await response.blob();
         const file = new File([blob], 'cuma-mesaji.jpg', { type: 'image/jpeg' });
 
-        // 2. Paylaşma menüsünü açıyoruz (Dosya + Metin)
+        // 2. Paylaşma menüsünü (dosya desteği ile) tetikliyoruz
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
             await navigator.share({
                 files: [file],
                 title: 'Cuma Mesajı',
-                text: text
+                text: text,
             });
         } else {
-            // Eğer tarayıcı dosya paylaşımını desteklemiyorsa sadece metni kopyalar/paylaşır
-            alert("Cihazınız görsel paylaşımını desteklemiyor, metin kopyalandı: " + text);
+            // Masaüstü veya desteklemeyen tarayıcılar için eski yöntem
+            const shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + " " + window.location.href)}`;
+            window.open(shareUrl, '_blank');
         }
     } catch (error) {
         console.error('Paylaşım hatası:', error);
-        alert("Paylaşım sırasında bir hata oluştu.");
+        // Hata durumunda en azından metni gönder
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     }
-}   
+} 
 
 // Sayfa yüklendiğinde çalıştır
 document.addEventListener('DOMContentLoaded', loadFridayMessages);
