@@ -681,49 +681,46 @@ const fridayMessages = [
 
 function loadFridayMessages() {
     const container = document.getElementById('fridayMessagesContainer');
-    if (!container) return; // Hata almamak için kontrol ekledik
-    
+    if (!container) return;
     container.innerHTML = ''; 
-    
-    fridayMessages.forEach(msg => {
+    FridayMessages.forEach(msg => {
         const card = `
             <div class="friday-card">
-                <img src="${msg.img}" alt="Cuma Mesajı Görseli">
+                <img src="${msg.img}" alt="Cuma Mesajı">
                 <div class="friday-card-content">
                     <p class="friday-text">${msg.text}</p>
                     <button class="friday-share-btn" onclick="shareFriday('${msg.img}', '${msg.text}')">
                         <i class="fa-solid fa-paper-plane"></i> Paylaş
                     </button>
                 </div>
-            </div>
-        `;
+            </div>`;
         container.innerHTML += card;
     });
 }
 
 async function shareFriday(imgSrc, text) {
     try {
-        // 1. Görseli dosyaya çevir
+        // 1. Görseli hazırla
         const response = await fetch(imgSrc);
         const blob = await response.blob();
         const file = new File([blob], 'cuma-mesaji.jpg', { type: 'image/jpeg' });
 
-        // 2. Linki metnin içine açıkça ekle (En sağlam yöntem budur)
-        const siteLink = window.location.origin + window.location.pathname;
-        const fullMessage = `${text}\n\n👇 Diğer Mesajlar ve Vakitler İçin:\n${siteLink}`;
+        // 2. Linki metnin içine göm (En garantisi budur)
+        const siteLink = "https://semihh19.github.io/ezanvakti/"; 
+        const mesajVeLink = `${text}\n\n👇 Diğer mesajlar için:\n${siteLink}`;
 
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
             await navigator.share({
                 files: [file],
                 title: 'Cuma Mesajı',
-                text: fullMessage // Link artık bu metnin içinde
+                text: mesajVeLink // Linki burada gönderiyoruz
             });
         } else {
-            // Tarayıcı desteklemiyorsa doğrudan WhatsApp'a yönlendir
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(fullMessage)}`, '_blank');
+            // Alternatif (Sadece metin ve link)
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mesajVeLink)}`);
         }
     } catch (err) {
-        console.error("Paylaşım hatası:", err);
+        console.error("Hata:", err);
     }
 }
 
