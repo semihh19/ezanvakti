@@ -667,16 +667,16 @@ window.addEventListener('click', function(event) {
     }
 });
 const fridayMessages = [
-    { img: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=500", text: "Rabbim bu mübarek cuma günü hürmetine dualarınızı kabul eylesin. Hayırlı Cumalar." },
-    { img: "https://images.unsplash.com/photo-1564121211835-e88c852648ab?auto=format&fit=crop&w=500", text: "Gül kokulu cumalar dilerim. Kalbiniz huzurla, eviniz bereketle dolsun Hayırlı Cumalar." },
-    { img: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=500", text: "Cumanız aşk olsun, dualarınız makbul olsun. En güzel gül bahçeleri sizin olsun Hayırlı Cumalar." },
-    { img: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=500", text: "Nurlu cumalar. Mevla bizleri sevdiklerinden ayırmasın Hayırlı Cumalar." },
-       { img: "https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=500", text: "Bu mübarek günde dualarda buluşmak dileğiyle. Hayırlı Cumalar." },
-     { img: "https://images.unsplash.com/photo-1507501336603-6e31db2be093?auto=format&fit=crop&w=500", text: "Gönüller dua ile birleşince cuma daha bir güzel olur. Hayırlı Hayırlı Cumalar." },
-    { img: "https://images.unsplash.com/photo-1507501336603-6e31db2be093?auto=format&fit=crop&w=500", text: "Cuma gününün nuru üzerinize olsun. Selam ve dua ile Hayırlı Cumalar." },
-    { img: "https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=500", text: "Rabbim gönlünüzdeki her hayırlı duayı ömrünüze nasip etsin Hayırlı Cumalar." },
-    { img: "https://images.unsplash.com/photo-1493957988430-a5f2e15f39a3?auto=format&fit=crop&w=500", text: "Bereketi bol, huzuru daim bir cuma dilerim. Sevdiklerinize selam olsun Hayırlı Cumalar." },
-    { img: "https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=500", text: "Hayır kapılarının sonuna kadar açıldığı bu günde dualarınız kabul olsun Hayırlı Cumalar." }
+    { img: "cuma1.jpg", text: "Rabbim bu mübarek cuma günü hürmetine dualarınızı kabul eylesin. Hayırlı Cumalar." },
+    { img: "cuma2.jpg", text: "Gül kokulu cumalar dilerim. Kalbiniz huzurla, eviniz bereketle dolsun Hayırlı Cumalar." },
+    { img: "cuma3.jpg", text: "Cumanız aşk olsun, dualarınız makbul olsun. En güzel gül bahçeleri sizin olsun Hayırlı Cumalar." },
+    { img: "cuma4.jpg", text: "Nurlu cumalar. Mevla bizleri sevdiklerinden ayırmasın Hayırlı Cumalar." },
+       { img: "cuma5.jpg", text: "Bu mübarek günde dualarda buluşmak dileğiyle. Hayırlı Cumalar." },
+     { img: "cuma6.jpg", text: "Gönüller dua ile birleşince cuma daha bir güzel olur. Hayırlı Hayırlı Cumalar." },
+    { img: "cuma7.jpg", text: "Cuma gününün nuru üzerinize olsun. Selam ve dua ile Hayırlı Cumalar." },
+    { img: "cuma8.jpg", text: "Rabbim gönlünüzdeki her hayırlı duayı ömrünüze nasip etsin Hayırlı Cumalar." },
+    { img: "cuma9.jpg", text: "Bereketi bol, huzuru daim bir cuma dilerim. Sevdiklerinize selam olsun Hayırlı Cumalar." },
+    { img: "cuma10.jpg", text: "Hayır kapılarının sonuna kadar açıldığı bu günde dualarınız kabul olsun Hayırlı Cumalar." }
 ];  
 
 function loadFridayMessages() {
