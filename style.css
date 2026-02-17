@@ -278,7 +278,10 @@ nav {
     border-bottom: 1px solid #eee;
 }
 .dropdown-content a:hover { background-color: var(--bg-main); color: var(--primary-color); }
-.dropdown:hover .dropdown-content { display: block; }
+/* Tıklama ile açılıp kapanmayı kontrol edecek class */
+.dropdown-content.show { 
+    display: block; 
+}
 
 /* --- ANA KONTEYNER VE DASHBOARD --- */
 .main-container {
@@ -604,4 +607,18 @@ nav {
         font-size: 1rem;
         
     }
+}
+@media (max-width: 600px) {
+
+    .dashboard-clocks {
+        flex-direction: column !important;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .clock-box {
+        width: 100%;
+        min-width: unset;
+    }
+
 }
