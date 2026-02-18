@@ -754,3 +754,22 @@ nav {
     color: var(--primary-color); /* Anahtar kelimeleri hafifçe belirginleştirir */
     font-weight: 500;
 }
+.country-selector {
+    display: flex;
+    gap: 5px;
+    margin-right: 10px;
+}
+
+.country-btn {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.country-btn.active {
+    background: white;
+    color: black;
+}
