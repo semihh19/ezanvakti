@@ -1,3 +1,5 @@
+
+
 // Temel Ayarlar ve Sabitler
 const prayerKeys = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 const prayerNamesTR = { 'Fajr': 'İmsak', 'Sunrise': 'Güneş', 'Dhuhr': 'Öğle', 'Asr': 'İkindi', 'Maghrib': 'Akşam', 'Isha': 'Yatsı' };
@@ -12,6 +14,18 @@ const turkeyCities = [
     "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Şanlıurfa", "Şırnak",
     "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat", "Zonguldak"
 ];
+// BURAYA EKLE
+const kibrisCities = [
+    "Nicosia",     // Lefkoşa
+    "Kyrenia",     // Girne
+    "Famagusta",   // Gazimağusa
+    "Morphou",     // Güzelyurt
+    "Iskele"
+];
+
+
+let currentCountry = "turkiye";
+
 
 // 2. SAYFA YÜKLENDİĞİNDE ŞEHİRLERİ LİSTELE
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,21 +38,39 @@ document.addEventListener("DOMContentLoaded", () => {
 // Şehirleri Listeye Dolduran Fonksiyon
 function populateCityList() {
     const listContainer = document.getElementById('cityList');
-    listContainer.innerHTML = ''; // Temizle
+    listContainer.innerHTML = '';
 
-    turkeyCities.forEach(city => {
+    const cities = currentCountry === "kibris" ? kibrisCities : turkeyCities;
+
+
+
+    cities.forEach(city => {
+
         const a = document.createElement('a');
         a.href = "#";
         a.innerText = city;
-        // İngilizce karakter sorunu olmasın diye ID'yi düzeltiyoruz (İstanbul -> Istanbul)
-        const cityId = city.replace(/İ/g, 'I').replace(/ı/g, 'i').replace(/ş/g, 's').replace(/Ş/g, 'S').replace(/ğ/g, 'g').replace(/Ğ/g, 'G').replace(/ü/g, 'u').replace(/Ü/g, 'U').replace(/ö/g, 'o').replace(/Ö/g, 'O').replace(/ç/g, 'c').replace(/Ç/g, 'C');
-        
+
+        const cityId = city
+            .replace(/İ/g, 'I')
+            .replace(/ı/g, 'i')
+            .replace(/ş/g, 's')
+            .replace(/Ş/g, 'S')
+            .replace(/ğ/g, 'g')
+            .replace(/Ğ/g, 'G')
+            .replace(/ü/g, 'u')
+            .replace(/Ü/g, 'U')
+            .replace(/ö/g, 'o')
+            .replace(/Ö/g, 'O')
+            .replace(/ç/g, 'c')
+            .replace(/Ç/g, 'C');
+
         a.onclick = (e) => {
             e.preventDefault();
             changeCity(cityId, city);
-            // Mobilde menüyü kapatmak istersen buraya ekleme yapılabilir
         };
+
         listContainer.appendChild(a);
+
     });
 }
 
@@ -58,6 +90,25 @@ function filterCities() {
         }
     }
 }
+function changeCountry(country, label) {
+
+    currentCountry = country;
+
+    // Buton üstündeki yazıyı değiştir
+    document.getElementById("selectedCountryLabel").innerText = label;
+
+    populateCityList();
+
+    // Varsayılan şehir
+    if (country === "kibris") {
+        changeCity("Nicosia", "Lefkoşa");
+    } else {
+        changeCity("Istanbul", "İstanbul");
+    }
+}
+
+
+
 
 // 3. TARİHLERİ TÜRKÇE YAPMAK İÇİN "renderTables" GÜNCELLEMESİ
 // Mevcut renderTables fonksiyonunu bununla tamamen değiştir:
@@ -139,22 +190,32 @@ async function fetchMonthlyData(city) {
         const year = now.getFullYear();
         const month = now.getMonth() + 1;
 
-        // Aladhan API - method=13 (Diyanet İşleri Başkanlığı)
-       const url = `https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=${city}&country=Turkey&method=13&timezone=Europe/Istanbul`;
-        
+        // Ülkeye göre ayar
+        let country = "Turkey";
+        let timezone = "Europe/Istanbul";
+
+        if (currentCountry === "kibris") {
+            country = "Cyprus";
+            timezone = "Asia/Nicosia";
+        }
+
+        const url = `https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=${city}&country=${country}&method=13&timezone=${timezone}`;
+
         const response = await fetch(url);
         const data = await response.json();
-        
+
         if (data.code === 200) {
             monthlyData = data.data;
             updateUI();
         } else {
             console.error("API Hatası:", data.status);
         }
+
     } catch (error) {
         console.error("Veri çekilirken hata oluştu:", error);
     }
 }
+
 
 // Şehir Değiştirme Fonksiyonu
 function changeCity(cityId, cityName) {
@@ -669,7 +730,7 @@ window.addEventListener('click', function(event) {
     }
 });
 const fridayMessages = [
-    { img: "cuma1.jpg", text: "Rabbim bu mübarek cuma günü hürmetine dualarınızı kabul eylesin. Hayırlı Cumalar." },
+     { img: "cuma1.jpg", text: "Rabbim bu mübarek cuma günü hürmetine dualarınızı kabul eylesin. Hayırlı Cumalar." },
     { img: "cuma2.jpg", text: "Gül kokulu cumalar dilerim. Kalbiniz huzurla, eviniz bereketle dolsun Hayırlı Cumalar." },
     { img: "cuma3.jpg", text: "Cumanız aşk olsun, dualarınız makbul olsun. En güzel gül bahçeleri sizin olsun Hayırlı Cumalar." },
     { img: "cuma4.jpg", text: "Nurlu cumalar. Mevla bizleri sevdiklerinden ayırmasın Hayırlı Cumalar." },
@@ -679,7 +740,34 @@ const fridayMessages = [
     { img: "cuma8.jpg", text: "Rabbim gönlünüzdeki her hayırlı duayı ömrünüze nasip etsin Hayırlı Cumalar." },
     { img: "cuma9.jpg", text: "Bereketi bol, huzuru daim bir cuma dilerim. Sevdiklerinize selam olsun Hayırlı Cumalar." },
     { img: "cuma10.jpg", text: "Hayır kapılarının sonuna kadar açıldığı bu günde dualarınız kabul olsun Hayırlı Cumalar." }
-];  
+]; 
+const kandilMessages = [
+    { img: "kandil1.jpg", text: "Kandiliniz mübarek olsun." },
+    { img: "kandil2.jpg", text: "Dualarınız kabul olsun." },
+    { img: "kandil3.jpg", text: "Hayırlı kandiller." },
+    { img: "kandil4.jpg", text: "Allah kabul etsin." },
+    { img: "kandil5.jpg", text: "Rahmet gecesi mübarek olsun." },
+    { img: "kandil6.jpg", text: "Geceniz nur dolsun." },
+    { img: "kandil7.jpg", text: "Dualı kandiller." },
+    { img: "kandil8.jpg", text: "Huzurlu kandiller." },
+    { img: "kandil9.jpg", text: "Rabbim kabul etsin." },
+    { img: "kandil10.jpg", text: "Mübarek kandiller." }
+];
+
+const bayramMessages = [
+    { img: "ramazan1.jpg", text: "Bayramınız mübarek olsun." },
+    { img: "ramazan2.jpg", text: "Mutlu bayramlar." },
+    { img: "ramazan3.jpg", text: "Huzurlu bayramlar." },
+    { img: "ramazan4.jpg", text: "Nice bayramlara." },
+    { img: "ramazan5.jpg", text: "Bayram bereketi üzerinize olsun." },
+    { img:"ramazan6.jpg", text: "Sevdiklerinizle bayramlar." },
+    { img: "ramazan7.jpg", text: "Bayram mutluluk getirsin." },
+    { img: "ramazan8.jpg", text: "Dualı bayramlar." },
+    { img: "ramazan9.jpg", text: "Bayram huzur getirsin." },
+    { img: "ramazan10.jpg", text: "Hayırlı bayramlar." }
+];
+
+
 
 function loadFridayMessages() {
     const container = document.getElementById('fridayMessagesContainer');
@@ -731,4 +819,55 @@ async function shareFriday(imgSrc, text) {
 }
 
 // Sayfa yüklendiğinde çalıştır
-document.addEventListener('DOMContentLoaded', loadFridayMessages);
+document.addEventListener('DOMContentLoaded', () => {
+    loadFridayMessages();
+    loadKandilMessages();
+    loadBayramMessages();
+});
+
+function loadKandilMessages() {
+    const container = document.getElementById('kandilMessagesContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    kandilMessages.forEach(msg => {
+        const card = `
+            <div class="friday-card">
+                <img src="${msg.img}">
+                <div class="friday-card-content">
+                    <p class="friday-text">${msg.text}</p>
+                    <button class="friday-share-btn"
+                        onclick="shareFriday('${msg.img}', '${msg.text}')">
+                        <i class="fa-solid fa-paper-plane"></i> Paylaş
+                    </button>
+                </div>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+}
+
+
+function loadBayramMessages() {
+    const container = document.getElementById('bayramMessagesContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    bayramMessages.forEach(msg => {
+        const card = `
+            <div class="friday-card">
+                <img src="${msg.img}">
+                <div class="friday-card-content">
+                    <p class="friday-text">${msg.text}</p>
+                    <button class="friday-share-btn"
+                        onclick="shareFriday('${msg.img}', '${msg.text}')">
+                        <i class="fa-solid fa-paper-plane"></i> Paylaş
+                    </button>
+                </div>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+}
