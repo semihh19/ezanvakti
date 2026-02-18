@@ -30,6 +30,7 @@ body {
 
 /* --- NAVBAR --- */
 nav {
+    text-decoration: none;
     background-color: var(--secondary-color);
     height: 70px;
     display: flex;
@@ -44,6 +45,7 @@ nav {
 
 /* Logo ve İkon Hizalaması */
 .nav-logo {
+    text-decoration: none;
     display: flex;
     align-items: center;
     gap: 12px; /* İkon ile yazı arasındaki boşluk */
@@ -58,10 +60,12 @@ nav {
 }
 
 .nav-logo span {
+    text-decoration: none;
     line-height: 1;
     letter-spacing: 0.5px;
 }
 .nav-container {
+    text-decoration: none;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -89,6 +93,7 @@ nav {
 .nav-links a:hover { color: var(--accent-color); }
 /* Navbar Genel Yapı */
 nav {
+    text-decoration: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -101,12 +106,14 @@ nav {
     display: flex;
     align-items: center;
     gap: 25px;
+    text-decoration: none;
 }
 
 .nav-buttons {
     display: flex;
     align-items: center;
     gap: 12px;
+    text-decoration: none;
 }
 
 /* Dil Seçici Stili */
@@ -447,13 +454,34 @@ nav {
 }
 
 /* Mobil Uyum */
+/* MOBİL NAVBAR FIX */
 @media (max-width: 768px) {
-    .dashboard-clocks { flex-direction: column; gap: 20px; }
-    .clock-time { font-size: 2.5rem; }
-    .nav-links { display: none; /* Mobilde hamburger menü yapılabilir, şimdilik gizli */ }
-    .dropdown { display: block; margin-top: 10px; }
-    nav { flex-direction: column; height: auto; padding: 15px; }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+        height: auto;   /* 80px'i iptal ediyor */
+        padding: 10px 15px;
+        gap: 10px;
+    }
+
+    .nav-right {
+        width: 100%;
+    }
+
+    .nav-buttons {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .nav-buttons > * {
+        flex: 0 0 auto;
+    }
 }
+
 /* --- GENİŞLETİLMİŞ MODERN BİLGİ BANDI --- */
 
 .spiritual-card {
@@ -845,3 +873,22 @@ nav {
     cursor: pointer;
     font-size: 18px;
 }
+.country-btn {
+    background: transparent !important; /* Arka planı kaldırıp link gibi yapalım */
+    color: white !important;
+    font-size: 18px !important; /* Diğerleriyle aynı boyut */
+    border: 1px solid rgba(255,255,255,0.3); /* Hafif bir çerçeve şık durur */
+    padding: 5px 15px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.country-btn:hover {
+    background: rgba(255,255,255,0.1) !important; /* Üzerine gelince hafif parlama */
+}
+
+
+
+
+
+
