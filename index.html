@@ -166,6 +166,7 @@
 <body>
 
     <nav>
+        <!-- LOGO -->
         <div class="nav-logo">
             <svg class="diyanet-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <path d="M50 10 C25 10 10 30 10 55 C10 80 50 90 50 90 C50 90 90 80 90 55 C90 30 75 10 50 10 Z"
@@ -179,20 +180,35 @@
         </div>
 
         <div class="nav-right">
-            <ul class="nav-links">
-                <li><a href="#main-container" onclick="switchTab('haftalik')" data-i18n="weekly">Haftalık</a></li>
-                <li><a href="#main-container" onclick="switchTab('aylik')" data-i18n="monthly">Aylık</a></li>
-                <li><a href="#main-container" onclick="switchTab('diniGunler')" data-i18n="religiousDays">Dini
-                        Günler</a></li>
 
+            <!-- TAB LİNKLER -->
+            <ul class="nav-links">
+                <li><a href="#main-container" onclick="switchTab('haftalik')">Haftalık</a></li>
+                <li><a href="#main-container" onclick="switchTab('aylik')">Aylık</a></li>
+                <li><a href="#main-container" onclick="switchTab('diniGunler')">Dini Günler</a></li>
             </ul>
 
-
             <div class="nav-buttons">
+
+                <!-- KIBLE -->
                 <a href="https://qiblafinder.withgoogle.com/" target="_blank" class="qibla-btn">
-                    <i class="fa-solid fa-compass"></i> <span data-i18n="qibla">Kıble</span>
+                    <i class="fa-solid fa-compass"></i> Kıble
                 </a>
 
+                <!-- ÜLKE SEÇİMİ -->
+                <div class="country-dropdown">
+                    <button class="country-btn">
+                        🌍 <span id="selectedCountryLabel">Türkiye</span>
+                    </button>
+
+                    <div class="country-dropdown-content">
+                        <a href="#" onclick="changeCountry('turkiye','Türkiye')"> Türkiye</a>
+                        <a href="#" onclick="changeCountry('kibris','Kıbrıs')">Kıbrıs</a>
+                    </div>
+                </div>
+
+
+                <!-- ŞEHİR DROPDOWN -->
                 <div class="dropdown">
                     <button class="city-btn">
                         <i class="fa-solid fa-location-dot"></i>
@@ -203,11 +219,13 @@
                         <div class="search-container">
                             <input type="text" id="citySearch" placeholder="Şehir ara..." onkeyup="filterCities()">
                         </div>
+
                         <div id="cityList" class="city-list-container">
                         </div>
                     </div>
                 </div>
 
+                <!-- DİL SEÇİCİ -->
                 <div class="lang-wrapper">
                     <i class="fa-solid fa-globe lang-icon"></i>
                     <select onchange="changeLanguage(this.value)" class="lang-select">
@@ -216,9 +234,11 @@
                         <option value="ar">AR</option>
                     </select>
                 </div>
+
             </div>
         </div>
     </nav>
+
 
     <div class="spiritual-card" id="spiritualCard">
         <div class="spiritual-visual">
@@ -346,6 +366,7 @@
             </div>
 
         </div>
+
         <section class="friday-messages-section" id="cuma-mesajlari">
             <div class="section-header">
                 <h2>En Güzel Cuma Mesajları 2026</h2>
@@ -357,6 +378,34 @@
                 </div>
             </div>
         </section>
+        <!-- KANDİL MESAJLARI -->
+        <section class="friday-messages-section" id="kandil-mesajlari">
+            <div class="section-header">
+                <h2>En Güzel Kandil Mesajları</h2>
+                <p class="section-subtitle">Kandilinizi sevdiklerinizle paylaşın.</p>
+            </div>
+
+            <div class="slider-wrapper">
+                <div class="friday-slider" id="kandilMessagesContainer">
+                </div>
+            </div>
+        </section>
+
+
+        <!-- BAYRAM MESAJLARI -->
+        <section class="friday-messages-section" id="bayram-mesajlari">
+            <div class="section-header">
+                <h2>En Güzel Bayram Mesajları</h2>
+                <p class="section-subtitle">Bayram sevincini paylaşın.</p>
+            </div>
+
+            <div class="slider-wrapper">
+                <div class="friday-slider" id="bayramMessagesContainer">
+                </div>
+            </div>
+        </section>
+
+
     </div>
     <div class="container">
 
