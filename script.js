@@ -1,11 +1,12 @@
-
 // Saati 1 saat geri alan yardımcı fonksiyon
 function adjustTimeOneHourBack(timeStr) {
     if (!timeStr) return "--:--";
     let [hours, minutes] = timeStr.split(':').map(Number);
-    hours = (hours - 1 + 24) % 24; // 00:00 ise 23:00'e çeker
+    // Saati 1 azaltır, eğer 00 ise 23'e çeker
+    hours = (hours - 1 + 24) % 24; 
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 }
+
 // Temel Ayarlar ve Sabitler
 const prayerKeys = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 const prayerNamesTR = { 'Fajr': 'İmsak', 'Sunrise': 'Güneş', 'Dhuhr': 'Öğle', 'Asr': 'İkindi', 'Maghrib': 'Akşam', 'Isha': 'Yatsı' };
@@ -190,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // --- API VERİ ÇEKME İŞLEMİ ---
+// --- API VERİ ÇEKME İŞLEMİ ---
 async function fetchMonthlyData(city) {
     try {
         const now = new Date();
@@ -202,7 +204,7 @@ async function fetchMonthlyData(city) {
 
         if (currentCountry === "kibris") {
             country = "Cyprus";
-            timezone = "Asia/Nicosia";
+            timezone = "Asia/Nicosia"; // API'ye zaten Kıbrıs saat dilimini söylüyoruz
         }
 
         const url = `https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=${city}&country=${country}&method=13&timezone=${timezone}`;
@@ -210,28 +212,12 @@ async function fetchMonthlyData(city) {
         const response = await fetch(url);
         const data = await response.json();
 
-       if (data.code === 200) {
-    let rawData = data.data;
-
-    // EĞER KIBRIS SEÇİLİYSE TÜM VAKİTLERİ 1 SAAT GERİ ÇEK
-    if (currentCountry === "kibris") {
-        rawData = rawData.map(day => {
-            const adjustedTimings = {};
-            for (let key in day.timings) {
-                // Sadece saat formatında olan verileri (SS:DD) değiştir
-                if (day.timings[key].includes(':')) {
-                    adjustedTimings[key] = adjustTimeOneHourBack(day.timings[key].split(' ')[0]);
-                } else {
-                    adjustedTimings[key] = day.timings[key];
-                }
-            }
-            return { ...day, timings: adjustedTimings };
-        });
-    }
-
-    monthlyData = rawData; // Artık veriler 1 saat geri çekilmiş haliyle kaydedildi
-    updateUI();
-} else {
+        if (data.code === 200) {
+            // API'den gelen veriyi doğrudan kullanıyoruz, 
+            // manuel saat geri alma (map döngüsü) kısmını tamamen SİLDİK.
+            monthlyData = data.data; 
+            updateUI();
+        } else {
             console.error("API Hatası:", data.status);
         }
 
@@ -282,6 +268,9 @@ function updateUI() {
 
     // 4. Tabloları Doldur
     renderTables();
+    // updateUI fonksiyonu içine eklenecekler:
+document.getElementById('sahurTime').innerText = todayData.timings.Fajr;
+document.getElementById('iftarTime').innerText = todayData.timings.Maghrib;
 }
 
 function renderTodayCards(dayData) {
@@ -311,7 +300,9 @@ function startCountdown(todayTimings, tomorrowTimings) {
 
     countdownTimer = setInterval(() => {
       const now = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" })
+    new Date().toLocaleString("en-US", { 
+        timeZone: currentCountry === "kibris" ? "Asia/Nicosia" : "Europe/Istanbul" 
+    })
 );
 
         let nextPrayer = null;
@@ -364,8 +355,8 @@ document.getElementById('nextPrayerLabel').innerText = translations[currentLang]
 }
 
 function startRealTimeClock() {
+    if (realTimeTimer) clearInterval(realTimeTimer); // Varsa eski zamanlayıcıyı temizle
     realTimeTimer = setInterval(() => {
-        // Cihazın saati yerine seçilen bölgeye göre saat oluştur
         const tz = (currentCountry === "kibris") ? "Asia/Nicosia" : "Europe/Istanbul";
         
         const now = new Date(
@@ -373,7 +364,7 @@ function startRealTimeClock() {
         );
 
         document.getElementById('realTimeClock').innerText =
-            now.toLocaleTimeString('tr-TR');
+            now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
     }, 1000);
 }
