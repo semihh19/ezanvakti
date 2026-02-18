@@ -1,5 +1,11 @@
 
-
+// Saati 1 saat geri alan yardımcı fonksiyon
+function adjustTimeOneHourBack(timeStr) {
+    if (!timeStr) return "--:--";
+    let [hours, minutes] = timeStr.split(':').map(Number);
+    hours = (hours - 1 + 24) % 24; // 00:00 ise 23:00'e çeker
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
 // Temel Ayarlar ve Sabitler
 const prayerKeys = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 const prayerNamesTR = { 'Fajr': 'İmsak', 'Sunrise': 'Güneş', 'Dhuhr': 'Öğle', 'Asr': 'İkindi', 'Maghrib': 'Akşam', 'Isha': 'Yatsı' };
@@ -204,10 +210,28 @@ async function fetchMonthlyData(city) {
         const response = await fetch(url);
         const data = await response.json();
 
-        if (data.code === 200) {
-            monthlyData = data.data;
-            updateUI();
-        } else {
+       if (data.code === 200) {
+    let rawData = data.data;
+
+    // EĞER KIBRIS SEÇİLİYSE TÜM VAKİTLERİ 1 SAAT GERİ ÇEK
+    if (currentCountry === "kibris") {
+        rawData = rawData.map(day => {
+            const adjustedTimings = {};
+            for (let key in day.timings) {
+                // Sadece saat formatında olan verileri (SS:DD) değiştir
+                if (day.timings[key].includes(':')) {
+                    adjustedTimings[key] = adjustTimeOneHourBack(day.timings[key].split(' ')[0]);
+                } else {
+                    adjustedTimings[key] = day.timings[key];
+                }
+            }
+            return { ...day, timings: adjustedTimings };
+        });
+    }
+
+    monthlyData = rawData; // Artık veriler 1 saat geri çekilmiş haliyle kaydedildi
+    updateUI();
+} else {
             console.error("API Hatası:", data.status);
         }
 
@@ -339,16 +363,17 @@ document.getElementById('nextPrayerLabel').innerText = translations[currentLang]
     }, 1000);
 }
 
-// Canlı Saat
 function startRealTimeClock() {
     realTimeTimer = setInterval(() => {
-
-        const turkeyNow = new Date(
-            new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" })
+        // Cihazın saati yerine seçilen bölgeye göre saat oluştur
+        const tz = (currentCountry === "kibris") ? "Asia/Nicosia" : "Europe/Istanbul";
+        
+        const now = new Date(
+            new Date().toLocaleString("en-US", { timeZone: tz })
         );
 
         document.getElementById('realTimeClock').innerText =
-            turkeyNow.toLocaleTimeString('tr-TR');
+            now.toLocaleTimeString('tr-TR');
 
     }, 1000);
 }
