@@ -462,7 +462,7 @@ const translations = {
         monthly: "Aylık Namaz Vakitleri",
         religiousDays: "2026 Dini Günler",
         qibla: "Kıble",
-        fajr: "İmsak", sunrise: "Güneş", dhuhr: "Öğle", asr: "İkindi", maghrib: "Akşam", isha: "Yatsı",
+        fajr: "İmsak (Sahur)", sunrise: "Güneş", dhuhr: "Öğle", asr: "İkindi", maghrib: "Akşam (İftar)", isha: "Yatsı",
         nextPrayer: "SIRADAKİ VAKTE KALAN SÜRE",
         currentTime: "ŞU ANKİ SAAT",
         miladiDate: "Miladi Tarih", hicriDate: "Hicri Tarih"
@@ -746,10 +746,10 @@ window.addEventListener('click', function(event) {
     }
 });
 const fridayMessages = [
-     { img: "cuma1.jpg", text: "Rabbim bu mübarek cuma günü hürmetine dualarınızı kabul eylesin. Hayırlı Cumalar." },
-    { img: "cuma2.jpg", text: "Gül kokulu cumalar dilerim. Kalbiniz huzurla, eviniz bereketle dolsun Hayırlı Cumalar." },
-    { img: "cuma3.jpg", text: "Cumanız aşk olsun, dualarınız makbul olsun. En güzel gül bahçeleri sizin olsun Hayırlı Cumalar." },
-    { img: "cuma4.jpg", text: "Nurlu cumalar. Mevla bizleri sevdiklerinden ayırmasın Hayırlı Cumalar." },
+     { img: "chatgpt.jpg", text: "Rabbim bu mübarek cuma günü hürmetine dualarınızı kabul eylesin. Hayırlı Cumalar." },
+    { img: "chatgpt2.jpg", text: "Gül kokulu cumalar dilerim. Kalbiniz huzurla, eviniz bereketle dolsun Hayırlı Cumalar." },
+    { img: "gemini3.jpg", text: "Cumanız aşk olsun, dualarınız makbul olsun. En güzel gül bahçeleri sizin olsun Hayırlı Cumalar." },
+    { img: "gemini4.jpg", text: "Nurlu cumalar. Mevla bizleri sevdiklerinden ayırmasın Hayırlı Cumalar." },
        { img: "cuma5.jpg", text: "Bu mübarek günde dualarda buluşmak dileğiyle. Hayırlı Cumalar." },
      { img: "cuma6.jpg", text: "Gönüller dua ile birleşince cuma daha bir güzel olur. Hayırlı Hayırlı Cumalar." },
     { img: "cuma7.jpg", text: "Cuma gününün nuru üzerinize olsun. Selam ve dua ile Hayırlı Cumalar." },
